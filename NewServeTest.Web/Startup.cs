@@ -43,22 +43,7 @@ namespace NewServeTest.Web
                 app.UseHsts();
             }
 
-            var policyCollection = new HeaderPolicyCollection()
-                .AddDefaultSecurityHeaders()
-                .RemoveServerHeader()
-                .AddContentSecurityPolicy(builder =>
-                {
-                    builder.AddFrameAncestors().Self();
-                    builder.AddDefaultSrc().None();
-                    builder.AddScriptSrc().Self().UnsafeInline().UnsafeEval();
-                    builder.AddStyleSrc().Self().UnsafeInline();
-                    builder.AddImgSrc().Self();
-                    builder.AddFormAction().Self();
-                    builder.AddConnectSrc().Self();
-                    builder.AddBaseUri().Self();
-                });
-
-            app.UseSecurityHeaders(policyCollection);
+            app.UseSecurityHeaders();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
