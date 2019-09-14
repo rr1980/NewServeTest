@@ -1,6 +1,9 @@
 
-.container {
+@import "../../_variables.scss";
+
+.container-fluid {
   height: 100vh;
+  background-color: $bg-rr;
 }
 
 .row {
