@@ -6,18 +6,18 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared-module/shared.module';
 
 @NgModule({
-   declarations: [
+  declarations: [
     AppComponent,
     routedComponents
-   ],
-   imports: [
-     BrowserModule,
-     SharedModule,
-      AppRoutingModule
-   ],
-   providers: [],
-   bootstrap: [
-      AppComponent
-   ]
+  ],
+  imports: [
+    BrowserModule,
+    SharedModule.forRoot(),
+    AppRoutingModule,
+  ],
+  providers: [],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

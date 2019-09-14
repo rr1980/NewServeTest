@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate, CanLoad {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    return true;
 
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
@@ -18,7 +17,6 @@ export class AuthGuard implements CanActivate, CanLoad {
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
 
-    return true;
 
     this.router.navigate(['/login'], { queryParams: { returnUrl: route.path } });
     return false;

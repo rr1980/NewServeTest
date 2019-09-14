@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../guards/auth.guard';
 
 
@@ -10,6 +10,7 @@ import { AuthGuard } from '../guards/auth.guard';
     CommonModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule
 
   ],
   declarations: [
@@ -18,6 +19,8 @@ import { AuthGuard } from '../guards/auth.guard';
     CommonModule,
     FormsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule {
