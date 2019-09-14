@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../guards/auth.guard';
+import { AuthService } from '../services/auth.service';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ export class SharedModule {
       ngModule: SharedModule,
       providers: [
         AuthGuard,
+        AuthService
       ]
     };
   }
