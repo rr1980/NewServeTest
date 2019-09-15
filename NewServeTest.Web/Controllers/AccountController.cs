@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -32,22 +31,16 @@ namespace NewServeTest.Web.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
-        private readonly JsonSerializerOptions _jsonOptions;
 
         public AccountController(ILogger<AccountController> logger)
         {
             _logger = logger;
-
-            _jsonOptions = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
         }
 
         [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginViewvModel loginViewvModel)
         {
-            var lVmString = JsonSerializer.ToString(loginViewvModel);
+            //var lVmString = JsonSerializer.ToString(loginViewvModel);
 
             if (ModelState.IsValid)
             {
@@ -89,12 +82,12 @@ namespace NewServeTest.Web.Controllers
                 }
                 else
                 {
-                    _logger.LogCritical("Auth fail: " + lVmString);
+                    _logger.LogCritical("Auth fail: User: '{0}', Password: '{1}'", loginViewvModel.Username, loginViewvModel.Password);
                     return StatusCode(403, "Benutzer oder Passwort falsch!!!");
                 }
             }
 
-            _logger.LogCritical("Check fail: " + lVmString);
+            _logger.LogCritical("Check fail: User: '{0}', Password: '{1}'", loginViewvModel.Username, loginViewvModel.Password);
             return BadRequest("Eingabe konnte nicht verarbeitet werden!");
         }
 
