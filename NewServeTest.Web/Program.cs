@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using NewServeTest.Logger;
 
 namespace NewServeTest.Web
 {
@@ -23,6 +20,13 @@ namespace NewServeTest.Web
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseIIS()
+                .ConfigureLogging((context, builder) =>
+                {
+                    builder.AddFile(opts =>
+                    {
+                        context.Configuration.GetSection("FileLoggingOptions").Bind(opts);
+                    });
+                })
                 .UseStartup<Startup>();
     }
 }

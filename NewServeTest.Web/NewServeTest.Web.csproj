@@ -40,6 +40,10 @@
     <None Remove="ClientApp\src\app\home\app-routing.module.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NewServeTest.Logger\NewServeTest.Logger.csproj" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

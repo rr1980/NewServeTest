@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace NewServeTest.Web.Controllers
@@ -32,17 +31,26 @@ namespace NewServeTest.Web.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
+        private readonly ILogger _logger;
+        private readonly JsonSerializerOptions _jsonOptions;
 
-        public AccountController()
+        public AccountController(ILogger<AccountController> logger)
         {
+            _logger = logger;
+
+            _jsonOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
         }
 
         [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginViewvModel loginViewvModel)
         {
+            var lVmString = JsonSerializer.ToString(loginViewvModel);
+
             if (ModelState.IsValid)
             {
-
                 if (loginViewvModel.Username == "rr1980" && loginViewvModel.Password == "12003")
                 {
                     var claims = new List<Claim>()
@@ -81,89 +89,14 @@ namespace NewServeTest.Web.Controllers
                 }
                 else
                 {
-                    return StatusCode(403,"Benutzer oder Passwort falsch!!!") ;
+                    _logger.LogCritical("Auth fail: " + lVmString);
+                    return StatusCode(403, "Benutzer oder Passwort falsch!!!");
                 }
             }
 
+            _logger.LogCritical("Check fail: " + lVmString);
             return BadRequest("Eingabe konnte nicht verarbeitet werden!");
         }
-
-        //[HttpPost("Login")]
-        //public async Task<LoginResultViewModel> Login([FromBody]LoginViewvModel loginViewvModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = new BenutzerValidationResultModel();
-
-        //        if (loginViewvModel.Username == "rr1980" && loginViewvModel.Password == "12003")
-        //        {
-        //            result.Benutzer = new UserViewvModel
-        //            {
-        //                Id = 99,
-        //                Username = "rr1980",
-        //                FirstName = "Rene",
-        //                LastName = "Riesner"
-        //            };
-        //        }
-        //        else
-        //        {
-        //            result.Fail = true;
-        //            result.ErrMsg = "Benutzer oder Passwort falsch!!!";
-        //        }
-
-        //        if (result.Fail)
-        //        {
-        //            return new LoginResultViewModel
-        //            {
-        //                Ok = false,
-        //                Msg = result.ErrMsg
-        //            };
-        //        }
-
-        //        if (result.Benutzer == null)
-        //        {
-        //            throw new NullReferenceException();
-        //        }
-
-        //        var claims = new List<Claim>()
-        //        {
-        //            new Claim("UserId", result.Benutzer.Id.ToString()),
-        //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        //        };
-
-        //        //foreach (var role in result.Benutzer.UserRights)
-        //        //{
-        //        //    claims.Add(new Claim("role", role));
-        //        //}
-
-        //        var now = DateTime.UtcNow;
-
-        //        var token = new JwtSecurityToken
-        //        (
-        //            issuer: "dotnetthoughts.net",
-        //            audience: "dotnetthoughts.net",
-        //            claims: claims.ToArray(),
-        //            notBefore: now,
-        //            expires: now.Add(TimeSpan.FromMinutes(100)),
-        //            signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ur390348490tsjf8sdjkdf0348490ts34849d2ad")), SecurityAlgorithms.HmacSha256)
-        //        );
-
-
-        //        var rt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        //        return new LoginResultViewModel
-        //        {
-        //            Ok = true,
-        //            Token = rt
-        //        };
-        //    }
-
-        //    return new LoginResultViewModel
-        //    {
-        //        Ok = false,
-        //        Msg = "Eingabe konnte nicht verarbeitet werden!"
-        //    };
-        //}
 
         //[Authorize]
         //[HttpPost("UserInfo")]
