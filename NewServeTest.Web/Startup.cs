@@ -15,6 +15,7 @@ using System.Text;
 
 namespace NewServeTest.Web
 {
+    //"build": "ng build --subresource-integrity",
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -59,7 +60,13 @@ namespace NewServeTest.Web
                 };
             });
 
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("https://www.rr1980.de:80", "https://localhost:44333").AllowAnyMethod().AllowAnyHeader();
+            }));
+
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddNewtonsoftJson();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -81,6 +88,7 @@ namespace NewServeTest.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseRequestMiddleware();
 
             app.UseAuthentication();
             app.UseSecurityHeaders();
@@ -88,6 +96,8 @@ namespace NewServeTest.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseCors("ApiCorsPolicy");
 
             app.UseMvc(routes =>
             {
