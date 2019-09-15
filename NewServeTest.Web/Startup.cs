@@ -68,8 +68,7 @@ namespace NewServeTest.Web
                 builder.WithOrigins("https://www.rr1980.de:80", "https://localhost:44333").AllowAnyMethod().AllowAnyHeader();
             }));
 
-            services.AddMvc(options => options.EnableEndpointRouting = false)
-                .AddNewtonsoftJson();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.AddSpaStaticFiles(configuration =>
             {
