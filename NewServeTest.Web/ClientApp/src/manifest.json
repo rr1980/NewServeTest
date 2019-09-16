@@ -1,12 +1,15 @@
 {
-    "name": "rr1980",
-    "short_name": "rr1980",
-    "description": "private site for rr1980",
-    "icons": [],
-    "scope": "/",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#673ab7"
-  }
-  
+  "name": "rr1980",
+  "lang": "en-US",
+  "description": "private site for rr1980",
+  "icons": [],
+  "scope": "/",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#673ab7",
+  "related_applications": [{
+    "platform": "Web",
+    "url": "https://www.rr1980.de"
+  }]
+}

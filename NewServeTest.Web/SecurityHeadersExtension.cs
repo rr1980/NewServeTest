@@ -21,6 +21,7 @@ namespace NewServeTest.Web
                 builder.AddFormAction().Self();
                 builder.AddConnectSrc().Self();
                 builder.AddBaseUri().Self();
+                builder.AddCustomDirective("manifest-src", "'self'");
             })
             .AddFeaturePolicy(builder =>
             {
