@@ -19,7 +19,7 @@ namespace NewServeTest.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseIIS()
+                //.UseIIS()
                 .ConfigureLogging((context, builder) =>
                 {
                     builder.AddFile(opts =>

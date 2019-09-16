@@ -1,0 +1,12 @@
+{
+    "name": "rr1980",
+    "short_name": "rr1980",
+    "description": "private site for rr1980",
+    "icons": [],
+    "scope": "/",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#673ab7"
+  }
+  
