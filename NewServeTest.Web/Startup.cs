@@ -27,17 +27,19 @@ namespace NewServeTest.Web
         {
             services.AddHttpContextAccessor();
 
-            services.AddResponseCompression(options =>
-            {
-                options.EnableForHttps = true;
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
-                            {
-                                "font/woff2",
-                                "image/gif",
-                                "image/png"
-                            });
-                options.Providers.Add<GzipCompressionProvider>();
-            });
+            services.AddResponseCompression();
+
+            //services.AddResponseCompression(options =>
+            //{
+            //    options.EnableForHttps = true;
+            //    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+            //                {
+            //                    "font/woff2",
+            //                    "image/gif",
+            //                    "image/png"
+            //                });
+            //    options.Providers.Add<GzipCompressionProvider>();
+            //});
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(jwtBearerOptions =>
@@ -83,6 +85,8 @@ namespace NewServeTest.Web
                 //app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            app.UseResponseCompression();
 
             app.UseAuthentication();
             app.UseSecurityHeaders();
