@@ -15,9 +15,9 @@ namespace NewServeTest.Web
             {
                 builder.AddFrameAncestors().Self();
                 builder.AddDefaultSrc().None();
-                builder.AddScriptSrc().Self().UnsafeInline().UnsafeEval();
+                builder.AddScriptSrc().Self().UnsafeInline().UnsafeEval().From("https://www.googletagmanager.com").From("https://www.google-analytics.com");
                 builder.AddStyleSrc().Self().UnsafeInline();
-                builder.AddImgSrc().Self();
+                builder.AddImgSrc().Self().Data().From("https://www.google-analytics.com");
                 builder.AddFormAction().Self();
                 builder.AddConnectSrc().Self();
                 builder.AddBaseUri().Self();

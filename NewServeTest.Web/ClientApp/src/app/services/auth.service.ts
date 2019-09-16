@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ga_event } from '../../assets/script';
 
 //interface ILoginResult {
 //  ok: boolean;
@@ -38,6 +39,7 @@ export class AuthService {
 
         if (response && response.token) {
           localStorage.setItem('currentUser', JSON.stringify(response));
+          ga_event("Login", username);
           this.currentUserSubject.next(response);
         }
 
